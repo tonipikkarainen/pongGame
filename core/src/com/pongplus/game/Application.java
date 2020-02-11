@@ -1,33 +1,78 @@
 package com.pongplus.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class Application extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+import managers.GameScreenManager;
+
+/**
+ * Main application class.
+ * All others call this in the beginning.
+ * 
+ * Now when we extend Game class we have 
+ * a protected Screen as a attribute and 
+ * we can do setScreen etc.. for Application
+ * @author tonipikkarainen
+ * @date 11.2.2020 
+ */
+public class Application extends Game {
+	// Config variables/ attributes
+	public static String APP_TITLE = "Pong Plus";
+	public static double APP_VERSION = 0.1;
+	public static int APP_DESKTOP_WIDTH = 720;
+	public static int APP_DESKTOP_HEIGHT= 480;
+	public static int APP_FPS = 60;
+	public static int V_WIDTH = 720;
+	public static int V_HEIGHT= 420;
+	
+	// Managers
+	public AssetManager assetManager;
+	public GameScreenManager gsm;
+	
+	public SpriteBatch batch;
+	public ShapeRenderer shapeRenderer;
+	
+//	Texture img;
 	
 	@Override
 	public void create () {
+		assetManager = new AssetManager();
+		shapeRenderer = new ShapeRenderer();
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		
+		// So here we create gamescreenmanager
+		// which starts the game logic. 
+		// gsm also has application as an attribute.
+		gsm = new GameScreenManager(this);
+		
+//		img = new Texture("badlogic.jpg");
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		super.render();
+//		Gdx.gl.glClearColor(1, 0, 0, 1);
+//		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//		batch.begin();
+//		batch.draw(img, 0, 0);
+//		batch.end();
+//		
+		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
+		shapeRenderer.dispose();
+		assetManager.dispose();
+		super.dispose();
+		gsm.dispose();
+//		img.dispose();
 	}
 }
