@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.pongplus.game.Application;
 
 public class Paddle extends Rectangle{
+	private final static float SPEED = 400;
 	
 	String name;
 	Texture img;
@@ -41,19 +42,28 @@ public class Paddle extends Rectangle{
 		
 	}
 	
-	public void movePaddle(float amount) {
-		if(this.y <= Application.V_HEIGHT - this.height && 
-				this.y >= 0 ) {
-			this.setPosition(this.x, this.y + amount);
-		}
-		else{
+	public void movePaddle(float timeStep) {
+		this.setPosition(this.x, this.y + SPEED*timeStep);
+		// Limits for moving
+		if(this.y > Application.V_HEIGHT - this.height ) {
 			this.setPosition(this.x, Application.V_HEIGHT - this.height);
+		}
+		else if(this.y < 0){
+			this.setPosition(this.x, 0);
 		}
 			
 	}
 	
 	public void dispose() {
 		img.dispose();
+	}
+	
+	public float getCenterX() {
+		return this.x + this.width/2;
+	}
+	
+	public float getCenterY() {
+		return this.y + this.height/2;
 	}
 
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import managers.GameScreenManager;
+import managers.GameScreenManager.GAMESTATE;
 
 /**
  * Main application class.
@@ -24,7 +25,7 @@ public class Application extends Game {
 	public static String APP_TITLE = "Pong Plus";
 	public static double APP_VERSION = 0.1;
 	public static int APP_DESKTOP_WIDTH = 720;
-	public static int APP_DESKTOP_HEIGHT= 480;
+	public static int APP_DESKTOP_HEIGHT= 420;
 	public static int APP_FPS = 60;
 	public static int V_WIDTH = 720;
 	public static int V_HEIGHT= 420;
@@ -63,6 +64,9 @@ public class Application extends Game {
 //		
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			Gdx.app.exit();
+		}
+		if (Gdx.input.isKeyPressed(Input.Keys.F5)) {
+			gsm.setGameScreen(GAMESTATE.MAIN_MENU);
 		}
 	}
 	

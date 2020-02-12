@@ -6,6 +6,7 @@ import com.pongplus.game.Application;
 
 import screens.AbstractScreen;
 import screens.GameScreen;
+import screens.MenuScreen;
 
 /**
  * Takes care of arranging screens.
@@ -26,12 +27,13 @@ public class GameScreenManager {
 	public GameScreenManager(Application app) {
 		this.app = app;
 		initGameScreens();
-		setGameScreen(GAMESTATE.PLAY);
+		setGameScreen(GAMESTATE.MAIN_MENU);
 	}
 	
 	private void initGameScreens() {
 		this.screens = new HashMap<GAMESTATE, AbstractScreen> ();
 		this.screens.put(GAMESTATE.PLAY, new GameScreen(this.app));
+		this.screens.put(GAMESTATE.MAIN_MENU, new MenuScreen(this.app));
 		// here we can add new types of screens
 	}
 	
