@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.pongplus.game.Application;
 
 import gameobjects.Ball;
@@ -26,10 +28,12 @@ public class GameScreen extends AbstractScreen {
 	Paddle paddleA, paddleB;
 	Ball ball;
 	BitmapFont font;	
+	Skin skin;
 	// Score
 	int playerAscore = 0;
 	int playerBscore = 0;
 	
+	// TODO: cameras position goes wrong when initialized..
 	public GameScreen(Application app) {
 		super(app);
 		camera = new OrthographicCamera();
@@ -37,6 +41,7 @@ public class GameScreen extends AbstractScreen {
 		font = new BitmapFont();
 		font.getData().setScale(2);
 		createObjects(); // create all disposable objects in constructor!!	
+		skin = new Skin(Gdx.files.internal("uiskin.json"));
 	}
 	// show is called after every setscreen so we have to think
 	// what to do there.
@@ -49,19 +54,16 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -76,7 +78,7 @@ public class GameScreen extends AbstractScreen {
 	public void render(float delta) {
 		super.render(delta);
 		//paddleA.
-//		stage.draw();
+		stage.draw();
 //		app.shapeRenderer.begin(ShapeType.Filled);
 //		app.shapeRenderer.setColor(1, 1, 1, 1);
 //		app.shapeRenderer.rect(10, 10, 20, 10);
@@ -89,6 +91,7 @@ public class GameScreen extends AbstractScreen {
 		handleInput(delta);
 		
 		checkScore();
+		checkWinning(delta);
 		
 		app.batch.begin();
 		app.batch.draw(paddleA.getImg(), paddleA.x, paddleA.y);
@@ -111,6 +114,22 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	
+	private void checkWinning(float delta) {
+		if(playerAscore == 2) {
+			Dialog d = new Dialog("player A wins",skin);
+			d.show(stage);
+			ball.setSPEED(0);
+			ball.setCenter(200,20);
+		}
+		if (playerBscore == 2) {
+			//do winscreen with input player B
+			Dialog d = new Dialog("player B wins", skin);
+			d.show(stage);
+			ball.setSPEED(0);
+			ball.setCenter(200,20);
+		}
+		
+	}
 	
 
 	private void handleInput(float delta) {
@@ -132,6 +151,7 @@ public class GameScreen extends AbstractScreen {
 		if (ball.x > Application.APP_DESKTOP_WIDTH - (ball.width + PADDLE_DIST_FROM_WALL)) {
 			 ball.init();
 			 playerAscore++;
+			 
 		}
 		
 		if (ball.x < PADDLE_DIST_FROM_WALL + PADDLE_WIDTH /2) {

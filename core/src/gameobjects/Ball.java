@@ -1,5 +1,7 @@
 package gameobjects;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
@@ -18,6 +20,8 @@ public class Ball extends Rectangle {
 	
 
 	float SPEED = 600;
+	
+
 	Vector2 SPEED_VECTOR =  new Vector2(1f,2f).nor();
 	
 	public Texture getImg() {
@@ -29,6 +33,9 @@ public class Ball extends Rectangle {
 		return SPEED_VECTOR;
 	}
 
+	public void setSPEED(float sPEED) {
+		SPEED = sPEED;
+	}
 
 	public void setSPEED_VECTOR(Vector2 sPEED_VECTOR) {
 		SPEED_VECTOR = sPEED_VECTOR;
@@ -124,6 +131,12 @@ public class Ball extends Rectangle {
 	}
 	
 	public void init() {
+//		SPEED_VECTOR.setToRandomDirection();
+//		if(SPEED_VECTOR.)
+		Random r = new Random();
+		SPEED_VECTOR = r.nextBoolean() ? new Vector2(r.nextFloat()+0.5f 
+				, r.nextFloat()+0.5f).nor() : new Vector2(r.nextFloat()-1.5f 
+						, r.nextFloat()+0.5f).nor();
 		this.setPosition(Application.V_WIDTH/2, Application.V_HEIGHT/2);
 	}
 }

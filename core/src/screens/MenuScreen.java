@@ -88,6 +88,7 @@ public class MenuScreen extends AbstractScreen{
 	@Override
 	public void update(float delta) {
 		stage.act(delta);
+		camera.update();
 	}
 	
 	@Override

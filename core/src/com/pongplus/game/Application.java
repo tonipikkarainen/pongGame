@@ -68,6 +68,11 @@ public class Application extends Game {
 		if (Gdx.input.isKeyPressed(Input.Keys.F5)) {
 			gsm.setGameScreen(GAMESTATE.MAIN_MENU);
 		}
+		if (Gdx.input.isKeyPressed(Input.Keys.F6)) {
+			this.dispose();
+			this.create();
+		}
+		
 	}
 	
 	@Override
